@@ -45,11 +45,32 @@ def linear_search(sequence, target):
     return {"positions": positions, "count": count}
 
 
+def binary_search(seznam, hledane):
+    levy_okraj = 0
+    pravy_okraj = len(seznam) -1
+
+    while levy_okraj <= pravy_okraj:
+        stred = (levy_okraj + pravy_okraj) // 2
+
+        if seznam[stred] == hledane:
+            return stred
+
+        elif seznam[stred] < hledane:
+            levy_okraj = stred + 1
+
+        else:
+            pravy_okraj = stred - 1
+
+
+    return None
+
 def main():
-    sequential_data = read_data("sequential.json", "unordered_numbers")
-    result = linear_search(sequential_data, 9)
+    data = read_data("sequential.json", "unordered_numbers")
+    result = binary_search(data, 9)
 
     print(result)
+
+
 
 
 if __name__ == "__main__":
