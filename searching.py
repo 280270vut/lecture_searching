@@ -64,12 +64,60 @@ def binary_search(seznam, hledane):
 
     return None
 
+
+import time
+import matplotlib.pyplot as plt
+from generators import unordered_sequence, ordered_sequence
+
+
 def main():
-    data = read_data("sequential.json", "unordered_numbers")
-    result = binary_search(data, 9)
+    vlastnosti = [100, 500, 1000, 5000, 10000]
+    casy_sekvencni = []
+    casy_binarni = []
 
-    print(result)
+    for vlastnost in vlastnosti:
 
+        neserazeny = unordered_sequence(max_len=100)
+        serazeny = ordered_sequence(max_len=100)
+
+        hledane = serazeny[len(serazeny) // 2]
+
+        start = time.perf_counter()
+        linear_search(neserazeny, hledane)
+        end = time.perf_counter()
+        casy_sekvencni.append(end - start)
+
+        start = time.perf_counter()
+        binary_search(serazeny, hledane)
+        end = time.perf_counter()
+        casy_binarni.append(end - start)
+
+        print("Velikosti:", velikosti)
+        print("Sekvencni:", casy_sekvencni)
+        print("Binarni:", casy_binarni)
+
+        plt.plot(velikosti, casy_sekvencni, label = "sekvencni")
+        plt.plot(velikosti, casy_binarni, label = "binarni")
+        plt.xlabel("Velikost vstupu")
+        plt.ylabel("Cas")
+        plt.title("porovnani algoritmu")
+        plt.legend()
+        plt.show()
+
+
+
+
+
+def main():
+    sequential_data = read_data("sequential.json", "unordered_numbers")
+    print(sequential_data)
+
+    linear_result = linear_search(sequential_data, 9)
+    print(linear_result)
+
+    ordered_data = read_data("sequential.json", "ordered_numbers")
+    binary_result = binary_search(ordered_data, 9)
+    print(binary_result)
 
 
 
